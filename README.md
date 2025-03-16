@@ -1,4 +1,5 @@
 Simple IMU sensor flowchart
 
 
-![IMU_BUZZER](https://github.com/user-attachments/assets/cc1f2d55-5e54-478d-952f-b7239e62af30)
+
+![flowchart](https://github.com/user-attachments/assets/fbf07ab9-9a8e-44eb-b977-db864d60f9a8)
