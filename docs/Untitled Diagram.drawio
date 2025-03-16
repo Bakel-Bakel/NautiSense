@@ -16,8 +16,8 @@
         <mxCell id="aFKgmaP8BqACqgFmaHnD-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="aFKgmaP8BqACqgFmaHnD-2" target="aFKgmaP8BqACqgFmaHnD-3" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="390" y="560" />
-              <mxPoint x="230" y="560" />
+              <mxPoint x="390" y="630" />
+              <mxPoint x="230" y="630" />
               <mxPoint x="230" y="230" />
             </Array>
           </mxGeometry>
@@ -41,7 +41,10 @@
           <mxGeometry x="470" y="358" width="40" height="30" as="geometry" />
         </mxCell>
         <mxCell id="aFKgmaP8BqACqgFmaHnD-10" value="No" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="380" y="478" width="40" height="30" as="geometry" />
+          <mxGeometry x="380" y="460" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BgrCfo9UpM_vOkmFK3iu-4" value="Turn off buzzer" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="500" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

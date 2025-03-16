@@ -12,7 +12,7 @@ void setup() {
 
     Serial.begin(115200);  // Initialize Serial communication for debugging
     Wire.begin();          // Start I2C communication
-
+    Serial.println("Hey"); 
     pinMode(BUZZER_PIN, OUTPUT); // Set buzzer pin as OUTPUT
 
     // Check if the MPU6500 sensor is detected and initialized properly
@@ -21,7 +21,7 @@ void setup() {
     } else {
         Serial.println("MPU6500 is connected"); // Print success message if detected
     }
-
+    
     // Inform the user to place the IMU flat for calibration
     Serial.println("Position your MPU6500 flat and don't move it - calibrating...");
     delay(1000); // Wait for 1 second before starting calibration
@@ -66,6 +66,7 @@ void setup() {
 }
 
 void loop() {
+   yield(); 
     // Read accelerometer, gyroscope, and temperature data
     xyzFloat gValue = myMPU6500.getGValues();
     xyzFloat gyr = myMPU6500.getGyrValues();
