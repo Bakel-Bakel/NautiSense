@@ -1,0 +1,77 @@
+[
+    {
+        "id": "FFF0000000000001",
+        "type": "tab",
+        "label": "FlowFuse Device Flow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "88ad73314f7cfb4b",
+        "type": "mqtt in",
+        "z": "FFF0000000000001",
+        "name": "",
+        "topic": "devices/MUIoT-NAPIoT",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "a218d2125c790fe7",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "d392a368f8834adc"
+            ]
+        ]
+    },
+    {
+        "id": "d392a368f8834adc",
+        "type": "debug",
+        "z": "FFF0000000000001",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a218d2125c790fe7",
+        "type": "mqtt-broker",
+        "name": "Test Mosquitto",
+        "broker": "test.mosquitto.org",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
