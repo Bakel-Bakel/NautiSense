@@ -1,1 +1,296 @@
-[{"id":"FFF0000000000001","type":"tab","label":"Flow1","disabled":false,"info":""},{"id":"27c56d8653322af6","type":"mqtt-broker","name":"","broker":"test.mosquitto.org","port":1883,"clientid":"","autoConnect":true,"usetls":false,"protocolVersion":4,"keepalive":60,"cleansession":true,"autoUnsubscribe":true,"birthTopic":"","birthQos":"0","birthRetain":"false","birthPayload":"","birthMsg":{},"closeTopic":"","closeQos":"0","closeRetain":"false","closePayload":"","closeMsg":{},"willTopic":"","willQos":"0","willRetain":"false","willPayload":"","willMsg":{},"userProps":"","sessionExpiry":""},{"id":"a1d741f2c2678cae","type":"ui-base","name":"My Dashboard","path":"/dashboard","appIcon":"","includeClientData":true,"acceptsClientConfig":["ui-notification","ui-control"],"showPathInSidebar":false,"headerContent":"page","navigationStyle":"default","titleBarStyle":"default","showReconnectNotification":true,"notificationDisplayTime":1,"showDisconnectNotification":true},{"id":"1eac02b6e4b2d15d","type":"ui-theme","name":"Default Theme","colors":{"surface":"#ffffff","primary":"#0094ce","bgPage":"#eeeeee","groupBg":"#ffffff","groupOutline":"#cccccc"},"sizes":{"density":"default","pagePadding":"12px","groupGap":"12px","groupBorderRadius":"4px","widgetGap":"12px"}},{"id":"14277c69889e3f4e","type":"ui-page","name":"NautiSense","ui":"a1d741f2c2678cae","path":"/page2","icon":"home","layout":"grid","theme":"1eac02b6e4b2d15d","breakpoints":[{"name":"Default","px":"0","cols":"3"},{"name":"Tablet","px":"576","cols":"6"},{"name":"Small Desktop","px":"768","cols":"9"},{"name":"Desktop","px":"1024","cols":"12"}],"order":1,"className":"","visible":"true","disabled":"false"},{"id":"5437a254b796b8c8","type":"ui-group","name":"Nausisense","page":"14277c69889e3f4e","width":6,"height":1,"order":1,"showTitle":true,"className":"","visible":"true","disabled":"false","groupType":"default"},{"id":"69f4c10de12edd41","type":"mqtt in","z":"FFF0000000000001","name":"","topic":"devices/MUIoT-NAPIoTpaulz","qos":"2","datatype":"auto-detect","broker":"27c56d8653322af6","nl":false,"rap":true,"rh":0,"inputs":0,"x":220,"y":140,"wires":[["e48e4641e23dabe9"]]},{"id":"b8a21b81e188ec15","type":"debug","z":"FFF0000000000001","name":"debug 1","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","statusVal":"","statusType":"auto","x":940,"y":120,"wires":[]},{"id":"e48e4641e23dabe9","type":"function","z":"FFF0000000000001","name":"function 1","func":"const distance = msg.payload.event_data.payload.find(sensor => sensor.type === \"Distance 1\")\n\nif (!distance) {\n    // If no distance sensor is found, return null to avoid errors\n    return null\n}\n\nconst distMessage = {\n    payload: distance.type,\n    unit: distance.unit,\n    timestamp: distance.timestamp\n}\n\n// Send the distance message to output 1\nreturn [distMessage]","outputs":1,"timeout":0,"noerr":0,"initialize":"","finalize":"","libs":[],"x":520,"y":140,"wires":[["c016b4dc273d1df3"]]},{"id":"d2d22b4c177af8a1","type":"ui-gauge","z":"FFF0000000000001","name":"Distance","group":"5437a254b796b8c8","order":3,"width":3,"height":3,"gtype":"gauge-half","gstyle":"needle","title":"gauge","units":"units","icon":"","prefix":"","suffix":"","segments":[{"from":"0","color":"#5cd65c"},{"from":"50","color":"#ffc800"},{"from":"100","color":"#ea5353"}],"min":0,"max":"100","sizeThickness":16,"sizeGap":4,"sizeKeyThickness":8,"styleRounded":true,"styleGlow":false,"className":"","x":940,"y":80,"wires":[]},{"id":"c016b4dc273d1df3","type":"switch","z":"FFF0000000000001","name":"","property":"payload","propertyType":"msg","rules":[{"t":"lte","v":"60","vt":"num"},{"t":"gte","v":"60","vt":"num"}],"checkall":"true","repair":false,"outputs":2,"x":690,"y":140,"wires":[["d2d22b4c177af8a1","b2f97512375734a4","b8a21b81e188ec15"],["5487890805c72faa"]]},{"id":"b2f97512375734a4","type":"ui-audio","z":"FFF0000000000001","group":"5437a254b796b8c8","name":"alarm","order":2,"width":0,"height":0,"src":"https://www.youtube.com/watch?v=7S-eD93VCB4","autoplay":"on","loop":"on","muted":"off","x":930,"y":160,"wires":[[]]},{"id":"5487890805c72faa","type":"ui-text","z":"FFF0000000000001","group":"5437a254b796b8c8","order":1,"width":0,"height":0,"name":"","label":"Alarm Off","format":"{{msg.payload}}","layout":"row-spread","style":false,"font":"","fontSize":16,"color":"#717171","wrapText":false,"className":"","x":940,"y":220,"wires":[]}]
+[
+    {
+        "id": "e2272171b3c9071f",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1e8425ddd33f1b5b",
+        "type": "function",
+        "z": "e2272171b3c9071f",
+        "name": "function 1",
+        "func": "const distance = msg.payload.event_data.payload.find(sensor => sensor.name === \"Distance 1\")\n\nconst distMessage = {\n    payload: distance.value,\n    unit: distance.unit,\n    timestamp: distance.timestamp\n};\n// Send the distance message to output 1\nreturn [distMessage];\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 140,
+        "wires": [
+            [
+                "6b496f802f0e5879"
+            ]
+        ]
+    },
+    {
+        "id": "6b496f802f0e5879",
+        "type": "switch",
+        "z": "e2272171b3c9071f",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "60",
+                "vt": "num"
+            },
+            {
+                "t": "gte",
+                "v": "60",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 670,
+        "y": 140,
+        "wires": [
+            [
+                "c111862acf7b1974",
+                "770cc08970737266"
+            ],
+            [
+                "ea847e7b4bab75f3"
+            ]
+        ]
+    },
+    {
+        "id": "c111862acf7b1974",
+        "type": "ui-audio",
+        "z": "e2272171b3c9071f",
+        "group": "469da6291410e73c",
+        "name": "",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "src": "https://www.youtube.com/watch?v=7S-eD93VCB4",
+        "autoplay": "on",
+        "loop": "on",
+        "muted": "off",
+        "x": 960,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ea847e7b4bab75f3",
+        "type": "ui-text",
+        "z": "e2272171b3c9071f",
+        "group": "469da6291410e73c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Alarm off",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "x": 940,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "0985c9704e4db74b",
+        "type": "mqtt in",
+        "z": "e2272171b3c9071f",
+        "name": "",
+        "topic": "devices/MUIoT-NAPIoTpaulz",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "5ca9314e5262a82c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 240,
+        "y": 140,
+        "wires": [
+            [
+                "1e8425ddd33f1b5b"
+            ]
+        ]
+    },
+    {
+        "id": "bb54dd0654e40417",
+        "type": "openweathermap in",
+        "z": "e2272171b3c9071f",
+        "name": "Weather",
+        "wtype": "current",
+        "lon": "",
+        "lat": "",
+        "city": "A coruna",
+        "country": "Spain",
+        "language": "en",
+        "x": 300,
+        "y": 380,
+        "wires": [
+            [
+                "aeb427a7e2ce70b0"
+            ]
+        ]
+    },
+    {
+        "id": "aeb427a7e2ce70b0",
+        "type": "debug",
+        "z": "e2272171b3c9071f",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "770cc08970737266",
+        "type": "debug",
+        "z": "e2272171b3c9071f",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "469da6291410e73c",
+        "type": "ui-group",
+        "name": "NautiSense",
+        "page": "874380bd6f849e42",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "5ca9314e5262a82c",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "874380bd6f849e42",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "20bf1598ef30d03f",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "0f97bfe2392d474e",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "20bf1598ef30d03f",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true
+    },
+    {
+        "id": "0f97bfe2392d474e",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    }
+]
