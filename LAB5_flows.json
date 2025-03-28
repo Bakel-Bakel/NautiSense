@@ -1,0 +1,463 @@
+[
+    {
+        "id": "e650959c5e52399f",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "58103f1c2f036cee",
+        "type": "mqtt in",
+        "z": "e650959c5e52399f",
+        "name": "",
+        "topic": "devices/NAPIoT-P2/temp",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "024b499a77f9a862",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 460,
+        "wires": [
+            [
+                "488ccf354a37c659",
+                "5f189df37bf66ffa",
+                "249b167ae0fb327f",
+                "84746a6d052ffaf1"
+            ]
+        ]
+    },
+    {
+        "id": "488ccf354a37c659",
+        "type": "ui-gauge",
+        "z": "e650959c5e52399f",
+        "name": "Temperature (°C)",
+        "group": "def0cd4c606a3aab",
+        "order": 3,
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Temperature (°C)",
+        "units": "units",
+        "icon": "",
+        "prefix": "",
+        "suffix": "°C",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5cd65c"
+            },
+            {
+                "from": "25",
+                "color": "#ffc800"
+            },
+            {
+                "from": "40",
+                "color": "#ea5353"
+            }
+        ],
+        "min": 0,
+        "max": "70",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 410,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "5f189df37bf66ffa",
+        "type": "debug",
+        "z": "e650959c5e52399f",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "508c75dafde8dd3e",
+        "type": "mqtt in",
+        "z": "e650959c5e52399f",
+        "name": "",
+        "topic": "devices/NAPIoT-P2/hum",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "024b499a77f9a862",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 710,
+        "y": 460,
+        "wires": [
+            [
+                "3a0e4b392e0df5eb",
+                "67299a45574ad03b",
+                "4f53416ca7c660c1",
+                "ca7107ff2a501a1c"
+            ]
+        ]
+    },
+    {
+        "id": "3a0e4b392e0df5eb",
+        "type": "ui-gauge",
+        "z": "e650959c5e52399f",
+        "name": "Humidity",
+        "group": "def0cd4c606a3aab",
+        "order": 1,
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Humidity",
+        "units": "units",
+        "icon": "",
+        "prefix": "",
+        "suffix": "%",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5cd65c"
+            },
+            {
+                "from": "50",
+                "color": "#ffc800"
+            },
+            {
+                "from": "80",
+                "color": "#ea5353"
+            }
+        ],
+        "min": 0,
+        "max": "100",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 940,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "67299a45574ad03b",
+        "type": "debug",
+        "z": "e650959c5e52399f",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "249b167ae0fb327f",
+        "type": "ui-text",
+        "z": "e650959c5e52399f",
+        "group": "def0cd4c606a3aab",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "Temperature",
+        "label": "Temperature Value: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "x": 410,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4f53416ca7c660c1",
+        "type": "ui-text",
+        "z": "e650959c5e52399f",
+        "group": "def0cd4c606a3aab",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Humidity",
+        "label": "Humidity Value: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "x": 960,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "84746a6d052ffaf1",
+        "type": "ui-chart",
+        "z": "e650959c5e52399f",
+        "group": "def0cd4c606a3aab",
+        "name": "Temperature chat",
+        "label": "Temperature over Time",
+        "order": 5,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 430,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ca7107ff2a501a1c",
+        "type": "ui-chart",
+        "z": "e650959c5e52399f",
+        "group": "def0cd4c606a3aab",
+        "name": "Humidity chat",
+        "label": "Humidity over Time",
+        "order": 6,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 980,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "024b499a77f9a862",
+        "type": "mqtt-broker",
+        "name": "Test Mosquitto",
+        "broker": "test.mosquitto.org",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "def0cd4c606a3aab",
+        "type": "ui-group",
+        "name": "Group 1",
+        "page": "bdccf3ab181c9c25",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "bdccf3ab181c9c25",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "68b5d14c52358b90",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "5333feef8aadd88e",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "68b5d14c52358b90",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true
+    },
+    {
+        "id": "5333feef8aadd88e",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    }
+]
