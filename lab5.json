@@ -1,0 +1,132 @@
+[
+    {
+        "id": "7e44f8721e61e31c",
+        "type": "ui-gauge",
+        "z": "20d47ab9005e97c5",
+        "name": "Distance",
+        "group": "1dca22b3125c09ba",
+        "order": 1,
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Distance level",
+        "units": "units",
+        "icon": "",
+        "prefix": "",
+        "suffix": "cm",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5cd65c"
+            },
+            {
+                "from": "100",
+                "color": "#ffc800"
+            },
+            {
+                "from": "200",
+                "color": "#ea5353"
+            }
+        ],
+        "min": 0,
+        "max": "200",
+        "sizeThickness": "25",
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 1440,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "1dca22b3125c09ba",
+        "type": "ui-group",
+        "name": "Group 1",
+        "page": "d1776055cb381338",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": true,
+        "disabled": false,
+        "groupType": "default"
+    },
+    {
+        "id": "d1776055cb381338",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "a702aa405fccd4c9",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "59f6511638cce69b",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "a702aa405fccd4c9",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": "1",
+        "showDisconnectNotification": true
+    },
+    {
+        "id": "59f6511638cce69b",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    }
+]
