@@ -10,7 +10,7 @@ const IMUDisplay = () => {
     const [connected, setConnected] = useState(false);
 
     useEffect(() => {
-        const ws = new WebSocket('ws://localhost:8765');
+        const ws = new WebSocket('ws://192.168.10.91:8765');
 
         ws.onopen = () => {
             console.log('Connected to IMU WebSocket');
