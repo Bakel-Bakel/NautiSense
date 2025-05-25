@@ -10,7 +10,7 @@ SERIAL_PORT = '/dev/ttyACM0'  # or '/dev/ttyACM0' depending on your setup
 BAUD_RATE = 115200
 
 # Regex to match three floats separated by commas
-imu_data_pattern = re.compile(r'^-?\\d+\\.\\d+,-?\\d+\\.\\d+,-?\\d+\\.\\d+$')
+imu_data_pattern = re.compile(r'^-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?$')
 
 connected_clients = set()
 
