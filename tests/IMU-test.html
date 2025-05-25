@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IMU WebSocket Test</title>
+</head>
+<body>
+  <h2>IMU Data</h2>
+  <pre id="output">Connecting...</pre>
+
+  <script>
+    const output = document.getElementById("output");
+
+    const socket = new WebSocket("ws://192.168.10.91:8765");
+
+    socket.onopen = () => {
+      output.textContent = "Connected to WebSocket\n";
+    };
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      output.textContent += `Roll: ${data.roll}, Pitch: ${data.pitch}, Yaw: ${data.yaw}\n`;
+    };
+
+    socket.onerror = (err) => {
+      output.textContent += `WebSocket error: ${err.message}\n`;
+    };
+  </script>
+</body>
+</html>
+
