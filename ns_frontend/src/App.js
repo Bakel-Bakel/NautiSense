@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css"; // Import the CSS file
+import IMUDisplay from "./components/IMUDisplay";
 
 export default function App() {
   return (
@@ -8,7 +9,10 @@ export default function App() {
       <ControlsPanel />
       
       {/* Right Panel - Visualization */}
-      <VisualizationPanel />
+      <div className="right-panel">
+        <VisualizationPanel />
+        <IMUDisplay />
+      </div>
     </div>
   );
 }
