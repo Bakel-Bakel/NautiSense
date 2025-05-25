@@ -5,7 +5,7 @@ import json
 import time
 
 # Configure serial port
-SERIAL_PORT = '/dev/ttyUSB0'  # or '/dev/ttyACM0' depending on your setup
+SERIAL_PORT = '/dev/ttyACM0'  # or '/dev/ttyACM0' depending on your setup
 BAUD_RATE = 115200
 
 async def read_imu_data(websocket):
