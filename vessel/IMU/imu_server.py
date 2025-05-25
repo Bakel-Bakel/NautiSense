@@ -25,9 +25,12 @@ async def imu_reader():
                 print(f"Serial decode error: {e}")
                 continue
 
-            if imu_data_pattern.match(line):
+            match = re.match(r'Roll: ([\\-\\d\\.]+) \\| Pitch: ([\\-\\d\\.]+) \\| Yaw: ([\\-\\d\\.]+)', line)
+            if match:
                 try:
-                    roll, pitch, yaw = map(float, line.split(','))
+                    roll = float(match.group(1))
+                    pitch = float(match.group(2))
+                    yaw = float(match.group(3))
                     data = {
                         'roll': roll,
                         'pitch': pitch,
