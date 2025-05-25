@@ -10,6 +10,7 @@ const IMUDisplay = () => {
     const [connected, setConnected] = useState(false);
 
     useEffect(() => {
+        console.log('Setting up WebSocket connection...');
         const ws = new WebSocket('ws://192.168.10.91:8765');
 
         ws.onopen = () => {
@@ -22,12 +23,23 @@ const IMUDisplay = () => {
             setConnected(false);
         };
 
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
         ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            setImuData(data);
+            console.log('Received message:', event.data);
+            try {
+                const data = JSON.parse(event.data);
+                console.log('Parsed IMU data:', data);
+                setImuData(data);
+            } catch (error) {
+                console.error('Error parsing IMU data:', error);
+            }
         };
 
         return () => {
+            console.log('Cleaning up WebSocket connection...');
             ws.close();
         };
     }, []);

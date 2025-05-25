@@ -21,6 +21,7 @@ async def imu_reader():
         if ser.in_waiting:
             try:
                 line = ser.readline().decode('utf-8', errors='ignore').strip()
+                print(f"Received line: {line}")  # Debug print
             except Exception as e:
                 print(f"Serial decode error: {e}")
                 continue
@@ -37,10 +38,14 @@ async def imu_reader():
                         'yaw': yaw,
                         'timestamp': time.time()
                     }
+                    print(f"Parsed data: {data}")  # Debug print
                     # Broadcast to all connected clients
                     if connected_clients:
                         msg = json.dumps(data)
+                        print(f"Sending to {len(connected_clients)} clients: {msg}")  # Debug print
                         await asyncio.gather(*(client.send(msg) for client in connected_clients))
+                    else:
+                        print("No connected clients")  # Debug print
                 except Exception as e:
                     print(f"Error parsing data: {e}")
             else:
@@ -51,12 +56,12 @@ async def imu_reader():
 
 async def handler(websocket):
     connected_clients.add(websocket)
-    print("WebSocket client connected")
+    print(f"WebSocket client connected. Total clients: {len(connected_clients)}")
     try:
         await websocket.wait_closed()
     finally:
         connected_clients.remove(websocket)
-        print("WebSocket client disconnected")
+        print(f"WebSocket client disconnected. Remaining clients: {len(connected_clients)}")
 
 async def main():
     # Start the serial reader task
