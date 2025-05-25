@@ -10,59 +10,27 @@ const IMUDisplay = () => {
     });
     const [connected, setConnected] = useState(false);
 
-    // For throttling updates to the 3D model
-    const [boatOrientation, setBoatOrientation] = useState({
-        roll: 0,
-        pitch: 0,
-        yaw: 0
-    });
+    // Boat orientation now updates in real time
+    const boatOrientation = {
+        roll: imuData.roll,
+        pitch: imuData.pitch,
+        yaw: imuData.yaw
+    };
 
     useEffect(() => {
-        console.log('Setting up WebSocket connection...');
-        const ws = new WebSocket('ws://192.168.245.91:8765');
-
-        ws.onopen = () => {
-            console.log('Connected to IMU WebSocket');
-            setConnected(true);
-        };
-
-        ws.onclose = () => {
-            console.log('Disconnected from IMU WebSocket');
-            setConnected(false);
-        };
-
-        ws.onerror = (error) => {
-            console.error('WebSocket error:', error);
-        };
-
+        const ws = new WebSocket('ws://192.168.10.91:8765');
+        ws.onopen = () => setConnected(true);
+        ws.onclose = () => setConnected(false);
         ws.onmessage = (event) => {
-            console.log('Received message:', event.data);
             try {
                 const data = JSON.parse(event.data);
-                console.log('Parsed IMU data:', data);
                 setImuData(data);
             } catch (error) {
-                console.error('Error parsing IMU data:', error);
+                // ignore
             }
         };
-
-        return () => {
-            console.log('Cleaning up WebSocket connection...');
-            ws.close();
-        };
+        return () => ws.close();
     }, []);
-
-    // Throttle updates to every 5 seconds
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setBoatOrientation({
-                roll: imuData.roll,
-                pitch: imuData.pitch,
-                yaw: imuData.yaw
-            });
-        }, 5000);
-        return () => clearInterval(interval);
-    }, [imuData]);
 
     return (
         <div className="imu-display">
