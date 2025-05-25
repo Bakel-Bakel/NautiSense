@@ -4,13 +4,21 @@ import websockets
 import json
 import time
 import re
+import csv
+import os
 
 # Configure serial port
 SERIAL_PORT = '/dev/ttyACM0'  # or '/dev/ttyACM0' depending on your setup
 BAUD_RATE = 115200
 
-# Regex to match three floats separated by commas
-imu_data_pattern = re.compile(r'^-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?$')
+LOG_FILE = "imu_data.log"
+CSV_FILE = "imu_data.csv"
+
+# Create CSV file with headers if it doesn't exist
+if not os.path.exists(CSV_FILE):
+    with open(CSV_FILE, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["timestamp", "roll", "pitch", "yaw"])
 
 connected_clients = set()
 
@@ -39,6 +47,16 @@ async def imu_reader():
                         'timestamp': time.time()
                     }
                     print(f"Parsed data: {data}")  # Debug print
+
+                    # Log to plain text file
+                    with open(LOG_FILE, "a") as logf:
+                        logf.write(f"{data['timestamp']},{data['roll']},{data['pitch']},{data['yaw']}\n")
+
+                    # Log to CSV file
+                    with open(CSV_FILE, "a", newline="") as csvf:
+                        writer = csv.writer(csvf)
+                        writer.writerow([data['timestamp'], data['roll'], data['pitch'], data['yaw']])
+
                     # Broadcast to all connected clients
                     if connected_clients:
                         msg = json.dumps(data)

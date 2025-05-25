@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Boat3D from './Boat3D';
 
 const IMUDisplay = () => {
     const [imuData, setImuData] = useState({
@@ -8,6 +9,13 @@ const IMUDisplay = () => {
         timestamp: 0
     });
     const [connected, setConnected] = useState(false);
+
+    // For throttling updates to the 3D model
+    const [boatOrientation, setBoatOrientation] = useState({
+        roll: 0,
+        pitch: 0,
+        yaw: 0
+    });
 
     useEffect(() => {
         console.log('Setting up WebSocket connection...');
@@ -44,6 +52,18 @@ const IMUDisplay = () => {
         };
     }, []);
 
+    // Throttle updates to every 5 seconds
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setBoatOrientation({
+                roll: imuData.roll,
+                pitch: imuData.pitch,
+                yaw: imuData.yaw
+            });
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [imuData]);
+
     return (
         <div className="imu-display">
             <h2>IMU Data</h2>
@@ -64,6 +84,7 @@ const IMUDisplay = () => {
                     <span>{imuData.yaw.toFixed(2)}°</span>
                 </div>
             </div>
+            <Boat3D roll={boatOrientation.roll} pitch={boatOrientation.pitch} yaw={boatOrientation.yaw} />
             <style jsx>{`
                 .imu-display {
                     padding: 20px;
