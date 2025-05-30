@@ -23,7 +23,7 @@ const BlockchainData = ({ boatId, currentData }) => {
                     const signer = await provider.getSigner();
 
                     // Contract address - replace with your deployed contract address
-                    const contractAddress = "YOUR_CONTRACT_ADDRESS";
+                    const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
                     
                     // Create contract instance
                     const contractInstance = new ethers.Contract(
