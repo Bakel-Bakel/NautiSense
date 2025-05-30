@@ -23,74 +23,72 @@ if not os.path.exists(CSV_FILE):
 connected_clients = set()
 
 # Temporarily comment out the serial reader function
-# async def imu_reader():
-#     ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
-#     print(f"Connected to {SERIAL_PORT}")
-#     while True:
-#         if ser.in_waiting:
-#             try:
-#                 line = ser.readline().decode('utf-8', errors='ignore').strip()
-#                 print(f"Received line: {line}")  # Debug print
-#             except Exception as e:
-#                 print(f"Serial decode error: {e}")
-#                 continue
+async def imu_reader():
+     ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
+     print(f"Connected to {SERIAL_PORT}")
+     while True:
+         if ser.in_waiting:
+             try:
+                 line = ser.readline().decode('utf-8', errors='ignore').strip()
+                 print(f"Received line: {line}")  # Debug print
+             except Exception as e:
+                 print(f"Serial decode error: {e}")
+                 continue
+             # Change regex back to expect comma-separated values
+             match = re.match(r'^-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?$', line)
+             if match:
+                 try:
+                     # Change parsing back to split comma-separated values
+                     roll, pitch, yaw = map(float, line.split(','))
+                     data = {
+                         'roll': roll,
+                         'pitch': pitch,
+                         'yaw': yaw,
+                         'timestamp': time.time()
+                     }
+                     print(f"Parsed data: {data}")  # Debug print
 
-#             # Change regex back to expect comma-separated values
-#             match = re.match(r'^-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?$', line)
-#             if match:
-#                 try:
-#                     # Change parsing back to split comma-separated values
-#                     roll, pitch, yaw = map(float, line.split(','))
-#                     data = {
-#                         'roll': roll,
-#                         'pitch': pitch,
-#                         'yaw': yaw,
-#                         'timestamp': time.time()
-#                     }
-#                     print(f"Parsed data: {data}")  # Debug print
+                     # Log to plain text file
+                     with open(LOG_FILE, "a") as logf:
+                         logf.write(f"{data['timestamp']},{data['roll']},{data['pitch']},{data['yaw']}\n")
+                     # Log to CSV file
+                     with open(CSV_FILE, "a", newline="") as csvf:
+                         writer = csv.writer(csvf)
+                         writer.writerow([data['timestamp'], data['roll'], data['pitch'], data['yaw']])
 
-#                     # Log to plain text file
-#                     with open(LOG_FILE, "a") as logf:
-#                         logf.write(f"{data['timestamp']},{data['roll']},{data['pitch']},{data['yaw']}\n")
-
-#                     # Log to CSV file
-#                     with open(CSV_FILE, "a", newline="") as csvf:
-#                         writer = csv.writer(csvf)
-#                         writer.writerow([data['timestamp'], data['roll'], data['pitch'], data['yaw']])
-
-#                     # Broadcast to all connected clients with robust error handling
-#                     if connected_clients:
-#                         msg = json.dumps(data)
-#                         print(f"Attempting to send to {len(connected_clients)} clients: {msg}")  # Debug print
+                     # Broadcast to all connected clients with robust error handling
+                     if connected_clients:
+                         msg = json.dumps(data)
+                         print(f"Attempting to send to {len(connected_clients)} clients: {msg}")  # Debug print
                         
-#                         send_tasks = []
-#                         valid_clients = []
-#                         for client in list(connected_clients): # Iterate over a copy
-#                             # Explicitly check if the client object is a WebSocketServerProtocol and is not closed
-#                             if isinstance(client, websockets.WebSocketServerProtocol) and not client.closed:
-#                                 send_tasks.append(client.send(msg))
-#                                 valid_clients.append(client)
-#                             else:
-#                                 # Optional: Log if an unexpected object or a closed client is in the set
-#                                 if not isinstance(client, websockets.WebSocketServerProtocol):
-#                                      print(f"Warning: Unexpected object type in connected_clients: {type(client)}")
-#                                 # Do not add to send_tasks if not a valid, open websocket
+                         send_tasks = []
+                         valid_clients = []
+                         for client in list(connected_clients): # Iterate over a copy
+                             # Explicitly check if the client object is a WebSocketServerProtocol and is not closed
+                             if isinstance(client, websockets.WebSocketServerProtocol) and not client.closed:
+                                 send_tasks.append(client.send(msg))
+                                 valid_clients.append(client)
+                             else:
+                                 # Optional: Log if an unexpected object or a closed client is in the set
+                                 if not isinstance(client, websockets.WebSocketServerProtocol):
+                                      print(f"Warning: Unexpected object type in connected_clients: {type(client)}")
+                                 # Do not add to send_tasks if not a valid, open websocket
 
-#                         if send_tasks:
-#                             print(f"Actually sending to {len(valid_clients)} valid clients.")
-#                             await asyncio.gather(*send_tasks, return_exceptions=True)
-#                         else:
-#                              print("No valid connected clients to send to.")
+                         if send_tasks:
+                             print(f"Actually sending to {len(valid_clients)} valid clients.")
+                             await asyncio.gather(*send_tasks, return_exceptions=True)
+                         else:
+                              print("No valid connected clients to send to.")
 
-#                     else:
-#                         print("No connected clients")  # Debug print
-#                 except Exception as e:
-#                     print(f"Error parsing data: {e}")
-#             else:
-#                 # Optionally print non-data lines for debugging
-#                 if line:
-#                     print(f"Ignored line: {line}")
-#         await asyncio.sleep(0.01)
+                     else:
+                         print("No connected clients")  # Debug print
+                 except Exception as e:
+                     print(f"Error parsing data: {e}")
+             else:
+                 # Optionally print non-data lines for debugging
+                 if line:
+                     print(f"Ignored line: {line}")
+         await asyncio.sleep(0.01)
 
 async def handler(websocket):
     # Revert to standard handler logic - trust the object passed is the connection
