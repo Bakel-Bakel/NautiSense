@@ -10,7 +10,7 @@ export default function App() {
       
       {/* Right Panel - Visualization */}
       <div className="right-panel">
-        <VisualizationPanel />
+      <VisualizationPanel />
         <IMUDisplay />
       </div>
     </div>

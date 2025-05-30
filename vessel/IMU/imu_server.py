@@ -93,26 +93,20 @@ connected_clients = set()
 #         await asyncio.sleep(0.01)
 
 async def handler(websocket):
-    # Explicitly check and add only if it's the expected protocol type
-    if isinstance(websocket, websockets.WebSocketServerProtocol):
-        connected_clients.add(websocket)
-        print(f"WebSocket client connected. Total clients: {len(connected_clients)}")
-        try:
-            # Wait for the websocket to close
-            await websocket.wait_closed()
-        finally:
-            # Explicitly check and remove only if it's the expected protocol type and is in the set
-            if isinstance(websocket, websockets.WebSocketServerProtocol) and websocket in connected_clients:
-                 connected_clients.remove(websocket)
-                 print(f"WebSocket client disconnected. Remaining clients: {len(connected_clients)}")
-            # Optional: Log if a non-protocol object was somehow in the set during disconnect
-            elif not isinstance(websocket, websockets.WebSocketServerProtocol):
-                 print(f"Warning: Non-protocol object attempting to disconnect: {type(websocket)}")
-    else:
-        print(f"Warning: Handler received unexpected object type: {type(websocket)}. Ignoring connection.")
-        # If it's not the right type, maybe close it just in case
-        if hasattr(websocket, 'close'):
-             await websocket.close()
+    # Revert to standard handler logic - trust the object passed is the connection
+    connected_clients.add(websocket)
+    print(f"WebSocket client connected. Total clients: {len(connected_clients)}")
+    try:
+        # Wait for the websocket to close
+        await websocket.wait_closed()
+    finally:
+        # Ensure removal logic doesn't crash if object type is unexpected during cleanup
+        if websocket in connected_clients: # Check if it's still in the set
+             connected_clients.remove(websocket)
+             print(f"WebSocket client disconnected. Remaining clients: {len(connected_clients)}")
+        # Optional: Log if a non-protocol object was somehow in the set during disconnect
+        # We can keep a simpler check here if needed, but removing the strict type check
+        # during addition is key.
 
 
 async def main():
