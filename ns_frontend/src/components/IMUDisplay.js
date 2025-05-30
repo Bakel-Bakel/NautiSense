@@ -10,7 +10,7 @@ const IMUDisplay = () => {
     });
     const [connected, setConnected] = useState(false);
 
-    // Boat orientation now updates in real time
+    // Boat orientation updates in real time
     const boatOrientation = {
         roll: imuData.roll,
         pitch: imuData.pitch,
@@ -18,19 +18,41 @@ const IMUDisplay = () => {
     };
 
     useEffect(() => {
-        const ws = new WebSocket('ws://192.168.59.91:8765');
-        ws.onopen = () => setConnected(true);
-        ws.onclose = () => setConnected(false);
+        console.log('Setting up WebSocket connection...');
+        const ws = new WebSocket('ws://192.168.59.91:8765'); // Correct URL
+
+        ws.onopen = () => {
+            console.log('Connected to IMU WebSocket');
+            setConnected(true);
+        };
+
+        ws.onclose = () => {
+            console.log('Disconnected from IMU WebSocket');
+            setConnected(false);
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
         ws.onmessage = (event) => {
+            console.log('Received message:', event.data);
             try {
                 const data = JSON.parse(event.data);
+                console.log('Parsed IMU data:', data);
                 setImuData(data);
             } catch (error) {
-                // ignore
+                console.error('Error parsing IMU data:', error);
             }
         };
-        return () => ws.close();
-    }, []);
+
+        // Temporarily removed cleanup for debugging
+        // return () => {
+        //     console.log('Cleaning up WebSocket connection...');
+        //     ws.close();
+        // };
+
+    }, []); // Dependency array is empty
 
     return (
         <div className="imu-display">
