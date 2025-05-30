@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css"; // Import the CSS file
 import IMUDisplay from "./components/IMUDisplay";
+// import BlockchainData from "./components/BlockchainData"; // Temporarily commented out
 
 export default function App() {
   return (
@@ -10,8 +11,10 @@ export default function App() {
       
       {/* Right Panel - Visualization */}
       <div className="right-panel">
-      <VisualizationPanel />
+        <VisualizationPanel />
         <IMUDisplay />
+        {/* Temporarily commented out BlockchainData component */}
+        {/* <BlockchainData boatId="yourBoatId" currentData={{ roll: 0, pitch: 0, yaw: 0 }} /> */}
       </div>
     </div>
   );
