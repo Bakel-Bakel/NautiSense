@@ -1,6 +1,7 @@
 # 🚢 NautiSense
 
-*NautiSense* (short for **“Nautical Sense”**) is a project aimed at developing a **smart real-time ship motion monitoring system**.
+[*NautiSense*](https://github.com/Bakel-Bakel/NautiSense/wiki) (short for **“Nautical Sense”**) is a project aimed at developing a **smart real-time ship motion monitoring system**.
+[*Read NautiSense Wiki*](https://github.com/Bakel-Bakel/NautiSense/wiki)
 
 ---
 
