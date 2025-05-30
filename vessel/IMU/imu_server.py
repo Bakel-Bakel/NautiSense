@@ -108,8 +108,8 @@ async def handler(websocket):
 
 
 async def main():
-    # Temporarily commented out the serial reader task
-    # asyncio.create_task(imu_reader())
+    # Start the serial reader task
+    asyncio.create_task(imu_reader())
     # Start the WebSocket server
     async with websockets.serve(handler, "0.0.0.0", 8765):
         print("WebSocket server started on ws://0.0.0.0:8765")
