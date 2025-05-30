@@ -34,12 +34,12 @@ async def imu_reader():
                 print(f"Serial decode error: {e}")
                 continue
 
-            match = re.match(r'Roll: ([\-0-9.]+) \| Pitch: ([\-0-9.]+) \| Yaw: ([\-0-9.]+)', line)
+            # Change regex back to expect comma-separated values
+            match = re.match(r'^-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?$', line)
             if match:
                 try:
-                    roll = float(match.group(1))
-                    pitch = float(match.group(2))
-                    yaw = float(match.group(3))
+                    # Change parsing back to split comma-separated values
+                    roll, pitch, yaw = map(float, line.split(','))
                     data = {
                         'roll': roll,
                         'pitch': pitch,
