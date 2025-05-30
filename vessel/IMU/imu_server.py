@@ -61,7 +61,9 @@ async def imu_reader():
                     if connected_clients:
                         msg = json.dumps(data)
                         print(f"Sending to {len(connected_clients)} clients: {msg}")  # Debug print
-                        await asyncio.gather(*(client.send(msg) for client in connected_clients))
+                        # Use a list comprehension with error handling for sending
+                        await asyncio.gather(*( (client.send(msg) if not client.closed else asyncio.sleep(0)) for client in list(connected_clients) ), return_exceptions=True) # Allow individual sends to fail without stopping gather
+
                     else:
                         print("No connected clients")  # Debug print
                 except Exception as e:
