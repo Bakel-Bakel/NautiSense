@@ -57,12 +57,29 @@ async def imu_reader():
                         writer = csv.writer(csvf)
                         writer.writerow([data['timestamp'], data['roll'], data['pitch'], data['yaw']])
 
-                    # Broadcast to all connected clients
+                    # Broadcast to all connected clients with robust error handling
                     if connected_clients:
                         msg = json.dumps(data)
-                        print(f"Sending to {len(connected_clients)} clients: {msg}")  # Debug print
-                        # Use a list comprehension with error handling for sending
-                        await asyncio.gather(*( (client.send(msg) if not client.closed else asyncio.sleep(0)) for client in list(connected_clients) ), return_exceptions=True) # Allow individual sends to fail without stopping gather
+                        print(f"Attempting to send to {len(connected_clients)} clients: {msg}")  # Debug print
+                        
+                        send_tasks = []
+                        valid_clients = []
+                        for client in list(connected_clients): # Iterate over a copy
+                            # Explicitly check if the client object is a WebSocketServerProtocol and is not closed
+                            if isinstance(client, websockets.WebSocketServerProtocol) and not client.closed:
+                                send_tasks.append(client.send(msg))
+                                valid_clients.append(client)
+                            else:
+                                # Optional: Log if an unexpected object or a closed client is in the set
+                                if not isinstance(client, websockets.WebSocketServerProtocol):
+                                     print(f"Warning: Unexpected object type in connected_clients: {type(client)}")
+                                # Do not add to send_tasks if not a valid, open websocket
+
+                        if send_tasks:
+                            print(f"Actually sending to {len(valid_clients)} valid clients.")
+                            await asyncio.gather(*send_tasks, return_exceptions=True)
+                        else:
+                             print("No valid connected clients to send to.")
 
                     else:
                         print("No connected clients")  # Debug print
