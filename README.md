@@ -1,7 +1,5 @@
 # NautiSense
-## System Architecture
-![System FlowChart](https://github.com/user-attachments/assets/66155ee3-2505-4f35-a3ac-121ae5e0d181)
+NautiSense (short for “Nautical Sense”) is a project aimed at developing a smart real-time ship motion monitoring system. In essence, it is designed to continuously measure and analyze a vessel’s motions and the forces acting on it due to waves. The system tracks multiple degrees of freedom in a ship’s movement for example, monitoring vertical heave, roll (side-to-side tilt), and pitch (fore-and-aft tilt) as well as external wave loading on the hull. By capturing this data in real time, NautiSense addresses the need for improved situational awareness and safety in maritime operations. 
+The problem it aims to solve is that ship operators often lack remotely accessible, high-fidelity insight into how their vessel is moving and being impacted by waves at any given moment. NautiSense’s real-time feedback can help mariners make informed decisions (such as adjusting course or speed in heavy seas) and alert them to dangerous motion conditions, ultimately ensuring safer navigation and operation of the vessel. It can also be valuable for ship engineers and researchers to log motion data for performance analysis or design validation in various sea conditions. 
 
-TODO: proper documentation
-Edit reports
    
